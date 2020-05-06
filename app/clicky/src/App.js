@@ -1,8 +1,7 @@
-import React from 'react';
-import './App.css';
-import Card from "./components/Card";
-import Wrapper from "./components/Wrapper";
-import Score from "./components/Score";
+import React, { Component } from "react";
+import Card from "./components/card";
+import Wrapper from "./components/wrapper";
+import Score from "./components/score";
 import flowers from "./flowers.json";
 
 class App extends Component {
@@ -17,7 +16,7 @@ class App extends Component {
 
   //shuffle the cards in the browser when clicked
   shuffleScoreCard = id => {
-    let clickedcards = this.state.clickedCards
+    let clickedCards = this.state.clickedCards
 
     if(clickedCards.includes(id)){
       this.setState({ clickedCards: [], score: 0, status:  "Game Over! You lost. Click to play again!" });
@@ -26,12 +25,12 @@ class App extends Component {
       clickedCards.push(id)
 
       if(clickedCards.length === 8){
-        this.setState({score: 10, status: "You Won! Great Job, Smartie! Click to play again!", clickedCards: []});
+        this.setState({score: 10, status: "You Won! Click to play again!", clickedCards: []});
         console.log('You Win');
         return;
       }
 
-      this.setState({ Flowers, clickedCards, score: clickedCards.length, status: " " });
+      this.setState({ flowers, clickedCards, score: clickedCards.length, status: " " });
 
       for (let i = flowers.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -47,13 +46,14 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Clicky Game</h1>
           <p className="App-intro">
-            Try not to click the same image twice!
+            Don't click the same image twice!
           </p>
         </header>
         <Score total={this.state.score}
                goal={10}
                status={this.state.status}
                />
+               
         <Wrapper>
           {this.state.flowers.map(flower => (
             <Card
@@ -63,6 +63,7 @@ class App extends Component {
               image={flower.image}
             />
           ))}
+          
         </Wrapper>
         
     </div>
